@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Recipe Book - Discover & Save Recipes</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🌍</span>
+                    Global Recipe Book
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" id="home-link" class="nav-active">Home</a></li>
+                        <li><a href="#" id="browse-link">Browse Recipes</a></li>
+                        <li><a href="#" id="my-recipes-link">My Recipes</a></li>
+                        <li><a href="#" id="add-recipe-link">Add Recipe</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="hero-section">
+            <h1>Discover Thousands of Recipes</h1>
+            <p>Explore global cuisine and save your favorite family recipes in one place</p>
+            <div class="search-bar-large">
+                <input type="text" id="global-search" placeholder="Search for recipes, ingredients, or cuisines...">
+                <button id="global-search-btn" class="btn">Search</button>
+            </div>
+        </div>
+
+        <div class="loading-section" id="loading-section">
+            <div class="loading-spinner"></div>
+            <p>Loading delicious recipes from around the world...</p>
+        </div>
+
+        <div class="main-content" id="main-content" style="display: none;">
+            <!-- Sidebar with Filters -->
+            <div class="sidebar">
+                <div class="search-section">
+                    <h3>🔍 Search & Filter</h3>
+                    <input type="text" id="search-input" class="search-input" placeholder="Search recipes...">
+                    <div class="search-buttons">
+                        <button id="search-btn" class="btn">Search</button>
+                        <button id="clear-search" class="btn btn-secondary">Clear</button>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3>📂 Filter by Category</h3>
+                    <select id="category-filter" class="search-input">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+    
+                <div class="filter-section">
+                    <h3>🍽️ Categories</h3>
+                    <div id="categories-list" class="categories-list"></div>
+                </div>
+    
+                <div class="filter-section">
+                    <h3>🌍 Cuisines</h3>
+                    <div id="areas-list" class="categories-list"></div>
+                </div>
+    
+                <div class="quick-stats">
+                    <h3>📊 Recipe Stats</h3>
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-recipes">0</span>
+                        <span class="stat-label">Total Recipes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="saved-recipes">0</span>
+                        <span class="stat-label">Saved Recipes</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recipe List -->
+            <div class="recipe-list">
+                <div class="section-header">
+                    <h2 id="recipes-title">Popular Recipes</h2>
+                    <div class="view-controls">
+                        <button id="grid-view" class="view-btn active">Grid</button>
+                        <button id="list-view" class="view-btn">List</button>
+                    </div>
+                </div>
+                
+                <div id="recipes-container" class="recipe-grid">
+                    <!-- Recipe cards will appear here -->
+                </div>
+    
+                <div class="load-more-section">
+                    <button id="load-more-btn" class="btn btn-large">Load More Recipes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Recipe Modal -->
+    <div id="add-recipe-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>👨‍🍳 Add Custom Recipe</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="recipe-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recipe-title">Recipe Title *</label>
+                        <input type="text" id="recipe-title" class="form-control" placeholder="e.g., Grandma's Special Biryani" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="recipe-category">Category *</label>
+                        <select id="recipe-category" class="form-control" required>
+                            <option value="">Select Category</option>
+                            <!-- Categories will be populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="recipe-area">Cuisine/Area</label>
+                    <input type="text" id="recipe-area" class="form-control" placeholder="e.g., Indian, Italian, Chinese">
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipe-ingredients">Ingredients * (one per line)</label>
+                    <textarea id="recipe-ingredients" class="form-control" placeholder="2 cups flour&#10;1 cup sugar&#10;3 eggs" required></textarea>
+                    <div class="form-hint">Enter each ingredient on a new line</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipe-instructions">Instructions *</label>
+                    <textarea id="recipe-instructions" class="form-control" placeholder="Step 1: Mix dry ingredients&#10;Step 2: Add wet ingredients&#10;Step 3: Bake at 350°F" required></textarea>
+                    <div class="form-hint">Enter each step on a new line</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipe-story">Family Story & Memories (Optional)</label>
+                    <textarea id="recipe-story" class="form-control" placeholder="Share the story behind this recipe..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn">Save Recipe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Recipe Detail View -->
+    <div id="recipe-detail" class="modal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h2 id="detail-title" class="recipe-detail-title"></h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            
+            <div class="recipe-hero">
+                <div id="detail-image" class="recipe-detail-image">
+                    <div class="image-placeholder">🍳</div>
+                </div>
+                <div class="recipe-meta">
+                    <span id="detail-category" class="category-badge"></span>
+                    <span id="detail-area" class="area-badge"></span>
+                    <span id="detail-tags" class="tags-container"></span>
+                </div>
+            </div>
+            
+            <div class="recipe-content">
+                <div class="ingredients-section">
+                    <h3>📝 Ingredients</h3>
+                    <ul id="detail-ingredients" class="ingredients-list"></ul>
+                </div>
+                
+                <div class="instructions-section">
+                    <h3>👨‍🍳 Instructions</h3>
+                    <div id="detail-instructions" class="instructions-content"></div>
+                </div>
+            </div>
+            
+            <div id="detail-story" class="story-section" style="display: none;">
+                <h3>📖 Family Story</h3>
+                <p id="story-content" class="story-content"></p>
+            </div>
+            
+            <div class="recipe-actions">
+                <div class="action-buttons">
+                    <button id="save-recipe-btn" class="btn">
+                        <span id="save-icon">💾</span>
+                        <span id="save-text">Save Recipe</span>
+                    </button>
+                    <button id="share-btn" class="btn share-btn">📤 Share</button>
+                    <button id="youtube-btn" class="btn btn-secondary" style="display: none;">📺 Watch Video</button>
+                </div>
+                <div class="manage-options" id="custom-recipe-options" style="display: none;">
+                    <button id="edit-btn" class="btn btn-secondary">✏️ Edit</button>
+                    <button id="delete-btn" class="btn btn-danger">🗑️ Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>🌍 Global Recipe Book - Powered by TheMealDB API | Preserving culinary traditions worldwide</p>
+        </div>
+    </footer>
+
+<!-- In your index.html, make sure scripts are in this order: -->
+<script src="scripts/storage.js"></script>
+<script src="scripts/api-manager.js"></script>
+<script src="scripts/recipe-manager.js"></script>
+<script src="scripts/app.js"></script>
+</body>
+</html>

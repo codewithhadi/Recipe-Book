@@ -8,7 +8,7 @@ A modern, responsive web application for discovering and managing recipes from a
 
 ## 🌟 Live Demo
 
-🚀 **[View Live Demo](https://yourusername.github.io/digital-recipe-book/)**
+🚀 **[View Live Demo]([https://codewithhadi.github.io/Recipe-Book/])**
 
 ## ✨ Features
 
